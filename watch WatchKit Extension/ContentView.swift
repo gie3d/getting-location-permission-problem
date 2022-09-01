@@ -16,21 +16,19 @@ struct ContentView: View {
             Text("Hello, World!")
                 .padding()
             Button(action: {
-                workoutManager.requestHealthAuthorization()
-            }) {
-                Text("Request Health Permission")
-            }
-            Button(action: {
                 workoutManager.requestLocationAuthorization()
             }) {
                 Text("Request Location Permission")
             }
-            NavigationLink("xxx", destination: Text("aaa"))
+            Button(action: {
+                workoutManager.requestLocationAuthorizationWithDispatch()
+            }) {
+                Text("Request ( Dispatch )Location Permission")
+            }
         }
         .onAppear() {
             print("on appear - content view")
-            workoutManager.requestLocationAuthorization()
-            workoutManager.requestHealthAuthorization()
+            workoutManager.requestLocationAuthorizationWithDispatch()
         }
     }
 }

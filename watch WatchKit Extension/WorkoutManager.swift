@@ -37,6 +37,30 @@ class WorkoutManager: NSObject, ObservableObject {
         
     }
     
+    func requestLocationAuthorizationWithDispatch() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            print("prepare to request location permission - inside dispathc async")
+            
+            self.locationManager.requestWhenInUseAuthorization()
+            if CLLocationManager.locationServicesEnabled() {
+                
+                print("it is enabled")
+                switch self.locationManager.authorizationStatus {
+                    case .notDetermined:
+                        print("not determined")
+                    case .restricted:
+                        print("restricted")
+                    case .denied:
+                        print("denied")
+                    case .authorizedAlways, .authorizedWhenInUse:
+                        print("Access")
+                }
+            } else {
+                print("it is not enabled")
+            }
+        }
+    }
+    
     func requestHealthAuthorization() {
         // The quantity type to write to the health store.
         let typesToShare: Set = [HKQuantityType.workoutType(), HKSeriesType.workoutRoute()]
